@@ -1,13 +1,43 @@
+
 expenses = []
+
 def add_expense():
-# Travail de l'etudiant A
-    pass
+    description = input("Description : ")
+
+    try:
+        amount = float(input("Montant : "))
+        if amount <= 0:
+            print("Le montant doit etre superieur a zero.")
+            return
+    except ValueError:
+        print("Veuillez entrer un montant valide.")
+        return
+
+    expenses.append({
+        "description": description,
+        "amount": amount
+    })
+
+    print("Depense ajoutee !")
+
+
 def show_expenses():
-# Travail de l'etudiant B
-    pass
+    if not expenses:
+        print("Aucune depense enregistree.")
+        return
+
+    print("\n===== LISTE DES DEPENSES =====")
+
+    for number, expense in enumerate(expenses, start=1):
+        print(f"{number}. {expense['description']} - "
+              f"{expense['amount']:.2f}")
+
+
 def show_total():
-# Travail de l'etudiant B
-    pass
+    total = sum(item["amount"] for item in expenses)
+    print(f"Total : {total:.2f}")
+
+
 def main():
     while True:
         print("\n===== SUIVI DES DEPENSES =====")
@@ -15,17 +45,25 @@ def main():
         print("2. Afficher les depenses")
         print("3. Afficher le total")
         print("4. Quitter")
-        choice = input("Votre choix : ")
+
+        choice = input("Votre choix : ").strip()
+
         if choice == "1":
             add_expense()
+
         elif choice == "2":
             show_expenses()
+
         elif choice == "3":
             show_total()
+
         elif choice == "4":
             print("Au revoir !")
             break
+
         else:
-            print("Choix invalide.")
-        if __name__ == "__main__":
-            main()
+            print("Choix invalide. Veuillez choisir entre 1 et 4.")
+
+
+if __name__ == "__main__":
+    main()
